@@ -1,0 +1,9 @@
+[project]
+name = "cache-admission-evaluation"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "loguru==0.7.3",
+    "numpy==2.5.3",
+    "scipy==1.18.1"
+]
