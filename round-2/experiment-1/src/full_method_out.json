@@ -1,0 +1,313 @@
+{
+  "metadata": {
+    "method_name": "VUCCA",
+    "description": "Visual Uncertainty-Aware Conformal Cache Admission with Adaptive Conformal Inference, soft-sigmoid admission bias, and semantic clustering",
+    "parameters": {
+      "cache_size": 50,
+      "calibration_fraction": 0.2,
+      "alpha": 0.1,
+      "k_clusters": 64,
+      "tau_base": 0.3,
+      "beta": 0.4,
+      "gamma": 5.0,
+      "trace_multiplier": 3
+    },
+    "baselines": [
+      "LRU",
+      "TinyLFU",
+      "ARC2"
+    ],
+    "ablations": [
+      "no_sigmoid",
+      "no_ACI",
+      "small_K",
+      "entropy"
+    ],
+    "regimes": [
+      "stationary_hot_clusters",
+      "sudden_popularity_shift",
+      "cold_start"
+    ]
+  },
+  "datasets": [
+    {
+      "dataset": "stationary_hot_clusters",
+      "examples": [
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"LRU\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.47854166666666664, \"throughput\": 5.693125, \"hits\": 11485, \"misses\": 12515, \"total_requests\": 24000, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_lru": "{\"hit_rate\": 0.47854166666666664, \"throughput\": 5.693125, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"TinyLFU\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.46379166666666666, \"throughput\": 5.825875, \"hits\": 11131, \"misses\": 12869, \"total_requests\": 24000, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_tinylfu": "{\"hit_rate\": 0.46379166666666666, \"throughput\": 5.825875, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"ARC2\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.9212916666666666, \"throughput\": 1.554625, \"hits\": 22111, \"misses\": 1520, \"total_requests\": 24000, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_arc2": "{\"hit_rate\": 0.9212916666666666, \"throughput\": 1.554625, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"VUCCA\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.4784583333333333, \"throughput\": 5.693875, \"hits\": 11483, \"misses\": 12517, \"total_requests\": 24000, \"coverage\": 0.06, \"clusters_used\": 64, \"bias_min\": 0.5, \"bias_max\": 0.697186565138002, \"admitted\": 12497, \"rejected\": 20, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca": "{\"hit_rate\": 0.4784583333333333, \"throughput\": 5.693875, \"coverage\": 0.06}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"VUCCA_no_sigmoid\", \"params\": {\"use_soft_sigmoid\": false, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.1595, \"throughput\": 8.5645, \"hits\": 3828, \"misses\": 20172, \"total_requests\": 24000, \"coverage\": 0.06, \"clusters_used\": 64, \"bias_min\": 0.3026951787996342, \"bias_max\": 0.6804917698002857, \"admitted\": 1823, \"rejected\": 18349, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_sigmoid": "{\"hit_rate\": 0.1595, \"throughput\": 8.5645, \"coverage\": 0.06}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"VUCCA_no_ACI\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": false, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.4784583333333333, \"throughput\": 5.693875, \"hits\": 11483, \"misses\": 12517, \"total_requests\": 24000, \"coverage\": 0.06, \"clusters_used\": 64, \"bias_min\": 0.5, \"bias_max\": 0.697186565138002, \"admitted\": 12497, \"rejected\": 20, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_aci": "{\"hit_rate\": 0.4784583333333333, \"throughput\": 5.693875, \"coverage\": 0.06}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"VUCCA_small_K\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 10, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.47820833333333335, \"throughput\": 5.696125, \"hits\": 11477, \"misses\": 12523, \"total_requests\": 24000, \"coverage\": 0.3, \"clusters_used\": 10, \"bias_min\": 0.6086870490926668, \"bias_max\": 0.697186565138002, \"admitted\": 12523, \"rejected\": 0, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_small_k": "{\"hit_rate\": 0.47820833333333335, \"throughput\": 5.696125, \"coverage\": 0.3}"
+        },
+        {
+          "input": "{\"regime\": \"stationary_hot_clusters\", \"method\": \"VUCCA_entropy\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": true}, \"num_items\": 826, \"trace_length\": 30000}",
+          "output": "{\"hit_rate\": 0.47241666666666665, \"throughput\": 5.74825, \"hits\": 11338, \"misses\": 12662, \"total_requests\": 24000, \"coverage\": 0.06, \"clusters_used\": 64, \"bias_min\": 0.5, \"bias_max\": 0.6862219217335155, \"admitted\": 1584, \"rejected\": 11078, \"calibration_size\": 6000, \"test_size\": 24000, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_entropy": "{\"hit_rate\": 0.47241666666666665, \"throughput\": 5.74825, \"coverage\": 0.06}"
+        }
+      ]
+    },
+    {
+      "dataset": "sudden_popularity_shift",
+      "examples": [
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"LRU\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.44134054954204827, \"throughput\": 6.027935054121565, \"hits\": 10601, \"misses\": 13419, \"total_requests\": 24020, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_lru": "{\"hit_rate\": 0.44134054954204827, \"throughput\": 6.027935054121565, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"TinyLFU\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.4085761865112406, \"throughput\": 6.322814321398834, \"hits\": 9814, \"misses\": 14206, \"total_requests\": 24020, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_tinylfu": "{\"hit_rate\": 0.4085761865112406, \"throughput\": 6.322814321398834, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"ARC2\", \"params\": {}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.9250208159866777, \"throughput\": 1.5453372189841799, \"hits\": 22219, \"misses\": 1490, \"total_requests\": 24020, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_arc2": "{\"hit_rate\": 0.9250208159866777, \"throughput\": 1.5453372189841799, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"VUCCA\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"hits\": 10588, \"misses\": 13432, \"total_requests\": 24020, \"coverage\": 0.24074074074074073, \"clusters_used\": 64, \"bias_min\": 0.6127005454629759, \"bias_max\": 0.697186565138002, \"admitted\": 13432, \"rejected\": 0, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"coverage\": 0.24074074074074073}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"VUCCA_no_sigmoid\", \"params\": {\"use_soft_sigmoid\": false, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.14637801831806826, \"throughput\": 8.682597835137386, \"hits\": 3516, \"misses\": 20504, \"total_requests\": 24020, \"coverage\": 0.24074074074074073, \"clusters_used\": 64, \"bias_min\": 0.3096539421149353, \"bias_max\": 0.6804917698002857, \"admitted\": 2182, \"rejected\": 18322, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_sigmoid": "{\"hit_rate\": 0.14637801831806826, \"throughput\": 8.682597835137386, \"coverage\": 0.24074074074074073}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"VUCCA_no_ACI\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": false, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"hits\": 10588, \"misses\": 13432, \"total_requests\": 24020, \"coverage\": 0.24074074074074073, \"clusters_used\": 64, \"bias_min\": 0.6127005454629759, \"bias_max\": 0.697186565138002, \"admitted\": 13432, \"rejected\": 0, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_aci": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"coverage\": 0.24074074074074073}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"VUCCA_small_K\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 10, \"use_entropy\": false}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"hits\": 10588, \"misses\": 13432, \"total_requests\": 24020, \"coverage\": 0.5555555555555556, \"clusters_used\": 10, \"bias_min\": 0.6340948834512503, \"bias_max\": 0.697186565138002, \"admitted\": 13432, \"rejected\": 0, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_small_k": "{\"hit_rate\": 0.4407993338884263, \"throughput\": 6.032805995004163, \"coverage\": 0.5555555555555556}"
+        },
+        {
+          "input": "{\"regime\": \"sudden_popularity_shift\", \"method\": \"VUCCA_entropy\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": true}, \"num_items\": 826, \"trace_length\": 30025}",
+          "output": "{\"hit_rate\": 0.4271856786011657, \"throughput\": 6.155328892589509, \"hits\": 10261, \"misses\": 13759, \"total_requests\": 24020, \"coverage\": 0.24074074074074073, \"clusters_used\": 64, \"bias_min\": 0.5, \"bias_max\": 0.6901513266114198, \"admitted\": 1818, \"rejected\": 11941, \"calibration_size\": 6005, \"test_size\": 24020, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_entropy": "{\"hit_rate\": 0.4271856786011657, \"throughput\": 6.155328892589509, \"coverage\": 0.24074074074074073}"
+        }
+      ]
+    },
+    {
+      "dataset": "cold_start",
+      "examples": [
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"LRU\", \"params\": {}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.41296018657337996, \"throughput\": 6.2833583208395805, \"hits\": 9916, \"misses\": 14096, \"total_requests\": 24012, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_lru": "{\"hit_rate\": 0.41296018657337996, \"throughput\": 6.2833583208395805, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"TinyLFU\", \"params\": {}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.3845993669831751, \"throughput\": 6.538605697151424, \"hits\": 9235, \"misses\": 14777, \"total_requests\": 24012, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_tinylfu": "{\"hit_rate\": 0.3845993669831751, \"throughput\": 6.538605697151424, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"ARC2\", \"params\": {}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.907671164417791, \"throughput\": 1.6614609361985673, \"hits\": 21795, \"misses\": 1810, \"total_requests\": 24012, \"coverage\": 0.0, \"clusters_used\": null, \"bias_min\": null, \"bias_max\": null, \"admitted\": null, \"rejected\": null, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_arc2": "{\"hit_rate\": 0.907671164417791, \"throughput\": 1.6614609361985673, \"coverage\": 0.0}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"VUCCA\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"hits\": 9907, \"misses\": 14105, \"total_requests\": 24012, \"coverage\": 0.03225806451612903, \"clusters_used\": 64, \"bias_min\": 0.5893712961691853, \"bias_max\": 0.697186565138002, \"admitted\": 14105, \"rejected\": 0, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"coverage\": 0.03225806451612903}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"VUCCA_no_sigmoid\", \"params\": {\"use_soft_sigmoid\": false, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.15725470598034316, \"throughput\": 8.584707646176911, \"hits\": 3776, \"misses\": 20236, \"total_requests\": 24012, \"coverage\": 0.03225806451612903, \"clusters_used\": 64, \"bias_min\": 0.3070497742055314, \"bias_max\": 0.6804917698002857, \"admitted\": 4019, \"rejected\": 16217, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_sigmoid": "{\"hit_rate\": 0.15725470598034316, \"throughput\": 8.584707646176911, \"coverage\": 0.03225806451612903}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"VUCCA_no_ACI\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": false, \"k_clusters\": 64, \"use_entropy\": false}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"hits\": 9907, \"misses\": 14105, \"total_requests\": 24012, \"coverage\": 0.03225806451612903, \"clusters_used\": 64, \"bias_min\": 0.5893712961691853, \"bias_max\": 0.697186565138002, \"admitted\": 14105, \"rejected\": 0, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_no_aci": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"coverage\": 0.03225806451612903}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"VUCCA_small_K\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 10, \"use_entropy\": false}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"hits\": 9907, \"misses\": 14105, \"total_requests\": 24012, \"coverage\": 0.2, \"clusters_used\": 10, \"bias_min\": 0.6208235091186587, \"bias_max\": 0.6971443490681422, \"admitted\": 14105, \"rejected\": 0, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_small_k": "{\"hit_rate\": 0.4125853739796768, \"throughput\": 6.2867316341829085, \"coverage\": 0.2}"
+        },
+        {
+          "input": "{\"regime\": \"cold_start\", \"method\": \"VUCCA_entropy\", \"params\": {\"use_soft_sigmoid\": true, \"use_aci\": true, \"k_clusters\": 64, \"use_entropy\": true}, \"num_items\": 926, \"trace_length\": 30015}",
+          "output": "{\"hit_rate\": 0.39646843245044144, \"throughput\": 6.431784107946027, \"hits\": 9520, \"misses\": 14492, \"total_requests\": 24012, \"coverage\": 0.03225806451612903, \"clusters_used\": 64, \"bias_min\": 0.5, \"bias_max\": 0.6901513266114198, \"admitted\": 2606, \"rejected\": 11886, \"calibration_size\": 6003, \"test_size\": 24012, \"error\": null}",
+          "metadata_fold": 0,
+          "metadata_feature_names": [
+            "hit_rate",
+            "throughput",
+            "coverage"
+          ],
+          "predict_vucca_entropy": "{\"hit_rate\": 0.39646843245044144, \"throughput\": 6.431784107946027, \"coverage\": 0.03225806451612903}"
+        }
+      ]
+    }
+  ]
+}
