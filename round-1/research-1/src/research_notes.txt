@@ -1,0 +1,49 @@
+Research Notes for Visual Uncertainty-Aware Cache Admission Survey
+
+FRONT A: Modern cache admission policies
+1. TinyLFU [1]: Frequency-based admission using frequency sketch (Bloom filter variant), no explicit uncertainty quantification, no semantic/visual content signal. Metrics: hit ratio. Traces: various production traces. Gains: enhances various replacement policies including ARC and LIRS.
+2. CACHEUS [2]: Learning-based replacement using LFU, LIRS, ARC as experts, no explicit uncertainty, no semantic signal. Metrics: cache hit rate. Traces: not specified in snippet. Gains: competitive across workloads.
+3. LeCaR [3]: ML-based improvement on ARC-ALRU, no explicit uncertainty, no semantic signal. Metrics: cache hit ratio. Traces: not specified. Gains: better than LRU.
+4. Bandit learning to cache [4]: Regret analysis showing LFU achieves order-optimal regret in full observation, caching bandit formulation for partial observation. No explicit uncertainty quantification in admission decision, no semantic signal. Metrics: regret. Traces: synthetic and real traces.
+5. GNN caching [5]: Limited direct evidence for admission policies. Some work on GNN for caching-related tasks like embedding storage. No clear admission mechanism with uncertainty/semantic signals found.
+6. S3-FIFO [6]: Scalable FIFO-based eviction with three static queues, no uncertainty quantification, no semantic signal. Metrics: miss ratio, throughput. Traces: 6594 cache traces from 14 datasets (block, key-value, object caches). Gains: lower miss ratios than state-of-the-art, 6× higher throughput than optimized LRU.
+7. Segcache [7]: TTL-based segmentation with FIFO queues, no uncertainty, no semantic signal. Metrics: not specified in snippets. Traces: not specified. Gains: efficient for short-lived objects.
+
+FRONT B: Conformal prediction and uncertainty in caching
+1. Conformal prediction tutorial [8]: Foundational work on conformal prediction, no caching application.
+2. Gentle introduction to conformal prediction [9]: Comprehensive intro, no caching application.
+3. Caching with Calibrated Predictions [11]: Related work on calibrated predictions for caching, not exactly conformal prediction for admission.
+4. Adaptive Cache Pollution Control for LLM [10]: Uses temporal CNN-based prediction for cache pollution control in LLM serving, not general cache admission.
+No direct evidence of conformal prediction or distribution-free uncertainty quantification applied to general cache admission decisions.
+
+FRONT C: Visual/semantic embeddings for content-based caching
+1. Semantic caching for LLM [12][13][14]: Embedding-based cache design using vector similarity search (OpenSearch, Qdrant, Redis), similarity thresholds for admission. No explicit uncertainty quantification.
+2. CLIP embedding similarity search [15]: Using CLIP for semantic image search, no caching admission mechanism described.
+3. Semantic cache for foundation models [16]: Using foundation model embeddings for LLM applications, similarity-based admission.
+4. ViT image retrieval [17]: IGTCache increases cache hit ratio by 55.6% using ViT for image retrieval.
+5. Prompt caching [18]: Caches embedding/computation of foundation-model prompts, not general cache admission.
+
+DATASET/TRACE HUNT:
+- Standard block traces (MSR Cambridge, CloudPhysics Tencent) contain no semantic signal
+- Need image/CDN/object traces or synthetic embedding-object workloads
+- Wikimedia Akamai CDN traces mentioned as potential source
+- Embedding object cache workload benchmarks needed
+
+METRICS:
+- Standard: object hit ratio (OHR), byte hit ratio (BHR), throughput (ops/s), latency (mean/p50/p99/tail)
+- Admission-specific: admission rate, pollution rate
+- Embedding overhead: compute overhead per item (ms/item)
+- Uncertainty calibration: empirical coverage vs nominal, interval width
+- For learned policies: training overhead, inference latency
+
+CONFOUNDS/RISKS:
+1. Exchangeability assumption: Popularity shifts violate exchangeability, may need adaptive/online conformal prediction (ACI) rather than split conformal
+2. Embedding inference overhead: Compute cost of generating embeddings may offset cache benefits
+3. Trace realism: Standard block traces lack semantic signal, requiring image/object traces or synthetic generators
+4. Calibration validity: Non-stationarity may break calibration guarantees
+5. Cold-start problem: New items lack history for uncertainty estimation
+
+RECOMMENDED BASELINES/DATASETS/METRICS:
+Baselines: TinyLFU, CACHEUS, LeCaR, S3-FIFO, Segcache, LRU, LFU, ARC, LIRS
+Datasets: Wikimedia Akamai CDN traces, image retrieval traces, synthetic embedding-object workloads
+Metrics: OHR, BHR, throughput, latency, admission rate, embedding compute overhead, calibration metrics
