@@ -1,0 +1,46 @@
+{
+  "type": "bar",
+  "title": "Hit Ratio Across Workload Regimes",
+  "xlabel": "Workload Regime",
+  "ylabel": "Hit Ratio",
+  "aspect": "16:9",
+  "categories": [
+    "Stationary",
+    "Popularity-Shift",
+    "Cold-Start"
+  ],
+  "series": [
+    {
+      "label": "LRU",
+      "values": [0.479, 0.441, 0.413]
+    },
+    {
+      "label": "TinyLFU",
+      "values": [0.464, 0.409, 0.385]
+    },
+    {
+      "label": "ARC2",
+      "values": [0.921, 0.925, 0.908]
+    },
+    {
+      "label": "VUCCA",
+      "values": [0.479, 0.441, 0.413]
+    },
+    {
+      "label": "VUCCA_no_sigmoid",
+      "values": [0.160, 0.146, 0.157]
+    },
+    {
+      "label": "VUCCA_no_ACI",
+      "values": [0.479, 0.441, 0.413]
+    },
+    {
+      "label": "VUCCA_small_K",
+      "values": [0.478, 0.441, 0.413]
+    },
+    {
+      "label": "VUCCA_entropy",
+      "values": [0.472, 0.427, 0.397]
+    }
+  ]
+}

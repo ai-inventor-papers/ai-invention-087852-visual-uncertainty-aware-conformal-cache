@@ -1,0 +1,52 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{booktabs}
+
+\geometry{margin=1in}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black}
+
+\title{Two Recent Methods for Cache Admission: S3-FIFO and Guard}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{S3-FIFO: Quick Demotion via Static FIFO Queues}
+
+S3-FIFO \citep{Yang2023} rethinks cache admission around a single observation: in highly skewed workloads, most objects are accessed only once within any short window, so admitting them into the main cache wastes capacity. The algorithm maintains three static FIFO queues: a small \textit{small} queue $S$ (typically 1\% of cache capacity), a \textit{main} queue $M$, and a \textit{mid} queue $U$. On a cache miss, the new object enters $S$. If it is re-accessed while in $S$, it promotes to $M$. Objects that age out of $S$ without a second access are evicted immediately, achieving what the authors call \textit{quick demotion}.
+
+The admission decision is implicit: an object is admitted to the main cache only after demonstrating at least two accesses. The small queue acts as a probationary filter. S3-FIFO uses no frequency sketches, no learned models, and no adaptive parameters. The queue sizes are fixed fractions of total capacity.
+
+Evaluated on 6594 traces from 14 datasets (856 billion requests), S3-FIFO achieves lower miss ratios than LRU, TinyLFU, and ARC across nearly all traces. On the large cache size, it reduces miss ratios by a mean of 14\% and by more than 32\% on the 10\% worst traces. The simplicity enables 6$\times$ higher throughput than optimized LRU at 16 threads, as FIFO queues avoid the pointer chasing of LRU lists.
+
+\textbf{Strengths.} No parameters to tune. No data structures beyond linked lists. Strong performance on real production traces. Scalable to many cores.
+
+\textbf{Limitations.} No semantic understanding of objects. No uncertainty quantification. Performance degrades on workloads where most objects are accessed exactly twice with the second access falling outside $S$ --- an adversarial pattern the authors acknowledge.
+
+\section{Guard: Robustifying Learning-Augmented Caching}
+
+Guard \citep{Chen2025} addresses a different problem: how to use learned predictions for cache admission without catastrophic failure when the predictor is wrong. Learning-augmented caching algorithms achieve ideal 1-consistency (matching the optimal offline algorithm when predictions are perfect) but can suffer unbounded competitive ratios when predictions are adversarial. Existing robustification methods either sacrifice 1-consistency or introduce $O(k)$ per-request overhead.
+
+Guard wraps any learning-augmented caching algorithm with a lightweight robustification framework. It maintains a confidence score for each prediction and uses a threshold-based strategy: when confidence exceeds a learned threshold, the algorithm follows the prediction; otherwise, it falls back to a safe baseline (e.g., LRU). The key theoretical result is that Guard achieves robustness $2H_{k-1} + 2$ while preserving 1-consistency, with only $O(1)$ additional per-request overhead.
+
+The robustness bound means that even with completely wrong predictions, Guard's cost is at most $2H_{k-1} + 2$ times the optimal offline cost, where $H_{k-1}$ is the $(k-1)$-th harmonic number. This is the best-known trade-off between consistency and robustness for learning-augmented caching.
+
+\textbf{Strengths.} Theoretical guarantees on both consistency and robustness. $O(1)$ overhead preserves the base algorithm's time complexity. Works with any learning-augmented base algorithm.
+
+\textbf{Limitations.} The confidence score requires a trained predictor, which introduces its own assumptions and failure modes. No distribution-free uncertainty guarantees: the confidence score is model-dependent, not statistically calibrated. The robustness bound, while improved, is still a worst-case guarantee that may be loose in practice.
+
+\section{Comparison and Open Directions}
+
+S3-FIFO and Guard represent opposite ends of the design spectrum. S3-FIFO eliminates learned components entirely, achieving strong empirical performance through structural simplicity. Guard embraces learned predictions but wraps them in theoretical safety nets. Neither provides distribution-free uncertainty quantification: S3-FIFO has no uncertainty model, and Guard's confidence scores are model-dependent.
+
+This gap motivates approaches like VUCCA, which use conformal prediction to provide statistically calibrated uncertainty intervals for admission decisions. Conformal prediction offers distribution-free coverage guarantees that neither S3-FIFO's fixed thresholds nor Guard's learned confidence scores provide. The challenge remains to combine the empirical strength of S3-FIFO, the theoretical robustness of Guard, and the statistical guarantees of conformal prediction into a single admission policy.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

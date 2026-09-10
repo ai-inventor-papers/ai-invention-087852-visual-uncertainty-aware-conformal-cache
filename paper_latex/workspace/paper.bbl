@@ -1,0 +1,88 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Angelopoulos and Bates(2021)]{Angelopoulos2021}
+Anastasios~N. Angelopoulos and Stephen Bates.
+\newblock A gentle introduction to conformal prediction and distribution-free
+  uncertainty quantification, 2021.
+
+\bibitem[Bura et~al.(2020)Bura, Pradeep, and Sharma]{Bura2020}
+Aleksandar Bura, A.~Pradeep, and Manish~P. Sharma.
+\newblock Learning to cache and caching to learn: Regret analysis of caching
+  algorithms.
+\newblock \emph{IEEE/ACM Transactions on Networking}, 2020.
+
+\bibitem[Chen et~al.(2025)Chen, Zhao, Zhang, Tang, Wang, and Deng]{Chen2025}
+Peng Chen, Yuzhe Zhao, Jialin Zhang, Haoyu Tang, Wei Wang, and Haibin Deng.
+\newblock Robustifying learning-augmented caching efficiently without
+  compromising 1-consistency.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2025.
+
+\bibitem[Dosovitskiy et~al.(2021)Dosovitskiy, Beyer, Kolesnikov, Weissenborn,
+  Zhai, Unterthiner, Dehghani, Minderer, Heigold, Gelly, Uszkoreit, and
+  Houlsby]{Dosovitskiy2021}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby.
+\newblock An image is worth 16x16 words: Transformers for image recognition at
+  scale.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2021.
+
+\bibitem[Einziger et~al.(2017)Einziger, Friedman, and Manes]{Einziger2017}
+Guy Einziger, Roy Friedman, and Barak Manes.
+\newblock Tinylfu: a highly efficient cache admission policy.
+\newblock \emph{ACM Transactions on Storage}, 13\penalty0 (3):\penalty0 1--23,
+  2017.
+\newblock \doi{10.1145/3089146}.
+
+\bibitem[Gibbs and Candes(2021)]{Gibbs2021}
+Isabel Gibbs and Emmanuel Candes.
+\newblock Adaptive conformal inference under distribution shift.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2021.
+
+\bibitem[Gibbs and Candes(2022)]{Gibbs2022}
+Isabel Gibbs and Emmanuel Candes.
+\newblock Conformal inference for online prediction with arbitrary distribution
+  shifts.
+\newblock \emph{Journal of Machine Learning Research}, 2022.
+
+\bibitem[Iliakopoulou et~al.(2024)Iliakopoulou, Stojkovic, Alverti, Xu, Franke,
+  and Torrellas]{Iliakopoulou2024}
+Nikoletta Iliakopoulou, Stefan Stojkovic, Christos Alverti, Yucheng Xu, Armin
+  Franke, and Jose Torrellas.
+\newblock Chameleon: Adaptive caching and scheduling for many-adapter llm
+  inference environments.
+\newblock In \emph{Proceedings of the 57th Annual IEEE/ACM International
+  Symposium on Microarchitecture (MICRO)}, 2024.
+
+\bibitem[Mangal et~al.(2020)Mangal, Jain, Guliani, and Bhalerao]{Mangal2020}
+Ayush Mangal, Jitesh Jain, Keerat~Kaur Guliani, and Omkar Bhalerao.
+\newblock Deap cache: Deep eviction admission and prefetching for cache, 2020.
+
+\bibitem[Megiddo and Modha(2003)]{Megiddo2003}
+Nir Megiddo and Dharmashainkh~S. Modha.
+\newblock Arc: a self-tuning, low overhead replacement cache.
+\newblock In \emph{Proceedings of the 2nd USENIX Conference on File and Storage
+  Technologies (FAST)}, 2003.
+
+\bibitem[Qiu et~al.(2024)Qiu, Yang, and Harchol-Balter]{Qiu2024}
+Ziyue Qiu, Juncheng Yang, and Mor Harchol-Balter.
+\newblock Can increasing the hit ratio hurt cache throughput? (long version),
+  2024.
+
+\bibitem[Yang et~al.(2023)Yang, Zhang, Qiu, Xie, Munagala, Liu, and
+  Subramaniam]{Yang2023}
+Jian Yang, Ge~Zhang, Zhenghao Qiu, Yongqian Xie, Kamesh Munagala, Xin Liu, and
+  Mani Subramaniam.
+\newblock Fifo queues are all you need for cache eviction.
+\newblock In \emph{Proceedings of the 29th Symposium on Operating Systems
+  Principles (SOSP)}, 2023.
+
+\end{thebibliography}

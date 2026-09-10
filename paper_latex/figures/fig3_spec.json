@@ -1,0 +1,39 @@
+{
+  "type": "custom_grouped_bar",
+  "title": "Throughput Comparison Across Regimes",
+  "xlabel": "Regime",
+  "ylabel": "Throughput (requests/latency)",
+  "aspect": "16:9",
+  "categories": [
+    "Stationary",
+    "Popularity-Shift",
+    "Cold-Start"
+  ],
+  "series": [
+    {
+      "label": "LRU",
+      "values": [5.69, 6.03, 6.28],
+      "color": "#808080"
+    },
+    {
+      "label": "TinyLFU",
+      "values": [5.83, 6.32, 6.54],
+      "color": "#C0C0C0"
+    },
+    {
+      "label": "ARC2",
+      "values": [1.55, 1.55, 1.66],
+      "color": "#404040"
+    },
+    {
+      "label": "VUCCA",
+      "values": [5.69, 6.03, 6.29],
+      "color": "#1f77b4"
+    }
+  ],
+  "ylim": [0.0, 10.0],
+  "legend": "right",
+  "grid": "horizontal",
+  "font": "sans-serif",
+  "background": "white"
+}

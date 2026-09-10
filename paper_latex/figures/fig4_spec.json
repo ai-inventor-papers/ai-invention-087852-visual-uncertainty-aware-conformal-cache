@@ -1,0 +1,20 @@
+{
+  "type": "barh",
+  "title": "Ablation: Impact of Design Components",
+  "xlabel": "Delta Hit Ratio",
+  "aspect": "4:3",
+  "categories": [
+    "no_sigmoid",
+    "no_ACI",
+    "small_K",
+    "entropy"
+  ],
+  "series": [
+    {
+      "label": "Δ Hit Ratio",
+      "values": [-0.319, 0.000, -0.001, -0.007],
+      "errors": [0.014, 0.0, 0.0, 0.0]
+    }
+  ],
+  "xlim": [-0.35, 0.0]
+}
