@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "method_name": "Visual Uncertainty-Aware Conformal Cache Admission",
+    "description": "Evaluates visual uncertainty-aware conformal cache admission against baseline policies",
+    "cache_capacity": 1000,
+    "num_items": 5000,
+    "trace_length": 2000,
+    "alpha": 0.1,
+    "gamma": 2.0,
+    "num_clusters": 10,
+    "window_size": 1000
+  },
+  "datasets": [
+    {
+      "dataset": "cache_admission_evaluation",
+      "examples": [
+        {
+          "input": "stationary_LRU_chunk0",
+          "output": "{\"hit_ratio\": 0.43, \"throughput\": 0.01741250217656277, \"average_latency\": 57.43, \"coverage_error\": 0.0, \"total_requests\": 400, \"total_hits\": 172}",
+          "metadata_regime": "stationary",
+          "metadata_policy": "LRU",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.43",
+          "predict_TinyLFU": "0.43",
+          "predict_ARC2": "0.43",
+          "predict_OURS": "0.17"
+        },
+        {
+          "input": "stationary_TinyLFU_chunk0",
+          "output": "{\"hit_ratio\": 0.43, \"throughput\": 0.01741250217656277, \"average_latency\": 57.43, \"coverage_error\": 0.0, \"total_requests\": 400, \"total_hits\": 172}",
+          "metadata_regime": "stationary",
+          "metadata_policy": "TinyLFU",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.43",
+          "predict_TinyLFU": "0.43",
+          "predict_ARC2": "0.43",
+          "predict_OURS": "0.17"
+        },
+        {
+          "input": "stationary_ARC2_chunk0",
+          "output": "{\"hit_ratio\": 0.43, \"throughput\": 0.01741250217656277, \"average_latency\": 57.43, \"coverage_error\": 0.0, \"total_requests\": 400, \"total_hits\": 172}",
+          "metadata_regime": "stationary",
+          "metadata_policy": "ARC2",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.43",
+          "predict_TinyLFU": "0.43",
+          "predict_ARC2": "0.43",
+          "predict_OURS": "0.17"
+        },
+        {
+          "input": "stationary_OURS_chunk0",
+          "output": "{\"hit_ratio\": 0.17, \"throughput\": 0.012023566189731874, \"average_latency\": 83.17, \"coverage_error\": 0.050000000000000044, \"total_requests\": 400, \"total_hits\": 68}",
+          "metadata_regime": "stationary",
+          "metadata_policy": "OURS",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.43",
+          "predict_TinyLFU": "0.43",
+          "predict_ARC2": "0.43",
+          "predict_OURS": "0.17"
+        },
+        {
+          "input": "popularity-shift_LRU_chunk0",
+          "output": "{\"hit_ratio\": 0.0625, \"throughput\": 0.010659560293137908, \"average_latency\": 93.8125, \"coverage_error\": 0.0, \"total_requests\": 400, \"total_hits\": 25}",
+          "metadata_regime": "popularity-shift",
+          "metadata_policy": "LRU",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.0625",
+          "predict_TinyLFU": "0.0625",
+          "predict_ARC2": "0.0625",
+          "predict_OURS": "0.0025"
+        },
+        {
+          "input": "popularity-shift_OURS_chunk0",
+          "output": "{\"hit_ratio\": 0.0025, \"throughput\": 0.010024811408235383, \"average_latency\": 99.7525, \"coverage_error\": 0.050000000000000044, \"total_requests\": 400, \"total_hits\": 1}",
+          "metadata_regime": "popularity-shift",
+          "metadata_policy": "OURS",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.0625",
+          "predict_TinyLFU": "0.0625",
+          "predict_ARC2": "0.0625",
+          "predict_OURS": "0.0025"
+        },
+        {
+          "input": "cold-start_LRU_chunk0",
+          "output": "{\"hit_ratio\": 0.25, \"throughput\": 0.013289036544850499, \"average_latency\": 75.25, \"coverage_error\": 0.0, \"total_requests\": 400, \"total_hits\": 100}",
+          "metadata_regime": "cold-start",
+          "metadata_policy": "LRU",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.25",
+          "predict_TinyLFU": "0.25",
+          "predict_ARC2": "0.25",
+          "predict_OURS": "0.01"
+        },
+        {
+          "input": "cold-start_OURS_chunk0",
+          "output": "{\"hit_ratio\": 0.01, \"throughput\": 0.0100999899000101, \"average_latency\": 99.01, \"coverage_error\": 0.050000000000000044, \"total_requests\": 400, \"total_hits\": 4}",
+          "metadata_regime": "cold-start",
+          "metadata_policy": "OURS",
+          "metadata_chunk": 0,
+          "predict_LRU": "0.25",
+          "predict_TinyLFU": "0.25",
+          "predict_ARC2": "0.25",
+          "predict_OURS": "0.01"
+        }
+      ]
+    }
+  ]
+}
