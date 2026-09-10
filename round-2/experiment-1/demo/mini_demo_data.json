@@ -1,0 +1,39 @@
+{
+  "datasets": [
+    {
+      "dataset": "stationary_hot_clusters",
+      "examples": [
+        {
+          "input": "{\"embedding\": [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08], \"popularity_count\": 8, \"cluster_id\": 0, \"timestamp\": 0, \"image_file\": \"image_001.jpg\"}",
+          "output": "1",
+          "metadata_fold": 0,
+          "metadata_feature_names": ["embedding", "popularity_count", "cluster_id", "timestamp", "image_file"]
+        },
+        {
+          "input": "{\"embedding\": [0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09], \"popularity_count\": 5, \"cluster_id\": 0, \"timestamp\": 1, \"image_file\": \"image_002.jpg\"}",
+          "output": "2",
+          "metadata_fold": 0,
+          "metadata_feature_names": ["embedding", "popularity_count", "cluster_id", "timestamp", "image_file"]
+        },
+        {
+          "input": "{\"embedding\": [0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02, 0.01], \"popularity_count\": 3, \"cluster_id\": 1, \"timestamp\": 2, \"image_file\": \"image_003.jpg\"}",
+          "output": "3",
+          "metadata_fold": 0,
+          "metadata_feature_names": ["embedding", "popularity_count", "cluster_id", "timestamp", "image_file"]
+        },
+        {
+          "input": "{\"embedding\": [0.09, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02], \"popularity_count\": 2, \"cluster_id\": 1, \"timestamp\": 3, \"image_file\": \"image_004.jpg\"}",
+          "output": "4",
+          "metadata_fold": 0,
+          "metadata_feature_names": ["embedding", "popularity_count", "cluster_id", "timestamp", "image_file"]
+        },
+        {
+          "input": "{\"embedding\": [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05], \"popularity_count\": 1, \"cluster_id\": 0, \"timestamp\": 4, \"image_file\": \"image_005.jpg\"}",
+          "output": "5",
+          "metadata_fold": 0,
+          "metadata_feature_names": ["embedding", "popularity_count", "cluster_id", "timestamp", "image_file"]
+        }
+      ]
+    }
+  ]
+}
